@@ -4,7 +4,7 @@ from distutils.version import LooseVersion as Version
 
 
 def get_log():
-       return logging.getLogger('pp.pkgutils.metadata')
+       return logging.getLogger('pp.pkglib.metadata')
 
 
 def get_parser():

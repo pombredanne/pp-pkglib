@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 
 def get_log():
-    return logging.getLogger('pp.pkgutils.osutil')
+    return logging.getLogger('pp.pkglib.osutil')
 
 
 @contextmanager

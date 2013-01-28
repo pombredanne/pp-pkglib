@@ -1,12 +1,12 @@
 import re
 import logging
 
-from pp.pkgutils.osutil import run
+from pp.pkglib.osutil import run
 
 RE_VERSION = re.compile('\d+\.\d+\.\d+')
 
 def get_log():
-    return logging.getLogger('pp.pkgutils.vcs')
+    return logging.getLogger('pp.pkglib.vcs')
 
 def get_tags():
     """ Returns a list of tags for the cwd

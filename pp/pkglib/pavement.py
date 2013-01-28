@@ -1,4 +1,5 @@
 """
+TODO: merge this with multipkg.py
 
 See http://paver.github.com/paver for more details on it.
 
@@ -21,7 +22,7 @@ from paver.options import Bunch
 CWD = os.path.abspath(os.curdir)
 
 
-BASKET = os.environ.get("BASKET","")
+BASKET = os.environ.get("BASKET", "")
 if BASKET:
     sys.stdout.write("Using Environment BASKET '%s'." % BASKET)
 
@@ -40,20 +41,20 @@ easy.options(
     ),
 
     # Add extra packages i.e. virtualenv into the paver system for use in installing:
-    minilib = Bunch(
-        extra_files = ['virtual',]
+    minilib=Bunch(
+        extra_files=['virtual', ]
     ),
 
     # Where bootstrap and install get information from
-    development_env = Bunch(
+    development_env=Bunch(
         install_root=path(os.environ.get("INSTALL_ROOT", CWD)),
-        env_dir="env",  # relative to install root.
+        env_dir="env", # relative to install root.
         env_root="", # will be configured in bootstrap() at runtime.
         src="", # will be set
         bootstrap="bootstrap.py", # will be configured in bootstrap() at runtime.
     ),
 
-    DEV_PKGS_IN_DEP_ORDER = [
+    DEV_PKGS_IN_DEP_ORDER=[
         Dep('pp-templates', 'hg', 'ssh://hg@bitbucket.org/python_pro/pp-templates'),
         Dep('pp-bookingsys-backend', 'hg', 'ssh://hg@bitbucket.org/python_pro/pp-bookingsys-backend'),
         Dep('pp-bookingsys-frontend', 'hg', 'ssh://hg@bitbucket.org/python_pro/pp-bookingsys-frontend'),

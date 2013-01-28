@@ -8,9 +8,9 @@ import pprint
 
 import pkg_resources
 
-from pp.pkgutils.osutil import chdir, run
-from pp.pkgutils.vcs import get_tags, get_revno, get_previous_revno
-from pp.pkgutils.metadata import get_parser, get_version, Version, get_metadata
+from pp.pkglib.osutil import chdir, run
+from pp.pkglib.vcs import get_tags, get_revno, get_previous_revno
+from pp.pkglib.metadata import get_parser, get_version, Version, get_metadata
 
 PKG_REPO=os.environ['PKG_REPO']
 HG_ROOT=os.environ['HG_ROOT']
@@ -19,7 +19,7 @@ SOURCE_PACKAGE_PREFIXES = ['pp.']
 
 
 def get_log():
-    return logging.getLogger('pp.pkgutils.scripts.tagup')
+    return logging.getLogger('pp.pkglib.scripts.tagup')
 
 
 class UserError(Exception):

@@ -1,52 +1,30 @@
-"""
-"""
-from setuptools import setup, find_packages
-from ConfigParser import ConfigParser
-import os
-def get_metadata():
-    parser = ConfigParser()
-    parser.read(os.path.join(os.path.dirname(__file__),'setup.cfg'))
-    return dict(parser.items('metadata'))
-md = get_metadata()
+# $HeadURL$
+try:
+    from pkglib.setuptools import setup
+except ImportError:
+    print "PkgLib is not available. Please run \"easy_install pkglib\""
+    import sys
+    sys.exit(1)
 
-TestSuite = ''
+# ------------------ Define your C-extensions here --------------------- #
 
-needed = [
-]
+# Conventions:
+# Source code under '<package root>/src/'
+# Extension modules names begin with an underscore: eg, '_xyz'
+# to differentiate them from regular Python modules.
 
-EagerResources = [
-]
+# import numpy
+# extra_compile_args = ['-O0']
 
-ProjectScripts = [
-]
+# setup( ext_modules = [
+#        Extension('acme.mypackage._foo', ['src/foo1.c', 'src/foo2.c']  \
+#                   include_dirs=[ numpy.get_include() ],
+#                   extra_compile_args=extra_compile_args,
+#        ),
+#        Extension('acme.mypackage._bar', ['src/bar1.c', 'src/bar2.c']  \
+#                   include_dirs=[ numpy.get_include() ],
+#                   extra_compile_args=extra_compile_args,
+#       ),
+# ])
 
-PackageData = {
-    # Include every file type in the egg file:
-    '': ['*.*'],
-}
-
-# Make exe versions of the scripts:
-EntryPoints = {
-  'console_scripts': ['tagup=pp.pkgutils.scripts.tagup:main'],
-}
-
-setup(
-#    url=ProjecUrl,
-    zip_safe=False,
-    name=md['name'],
-    version=md['version'],
-    author=md['author'],
-    author_email=md['author_email'],
-    description=md['summary'],
-    long_description=md['summary'],
-    license=md['licence'],
-    test_suite=TestSuite,
-    scripts=ProjectScripts,
-    install_requires=needed,
-    packages=find_packages(),
-    package_data=PackageData,
-    eager_resources = EagerResources,
-    entry_points = EntryPoints,
-    namespace_packages = ['pp'],
-
-)
+setup()
