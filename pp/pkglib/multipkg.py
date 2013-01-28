@@ -4,7 +4,8 @@ A top level helper so setup.py commands can be run on a number of
 Python packages in a repository in the correct order.
 """
 import sys
-from pkglib import config, manage, cmdline
+import subprocess
+from pkglib import config, manage
 
 
 def setup():
@@ -12,6 +13,7 @@ def setup():
     """
     top_level_parser = config.get_pkg_cfg_parser()
     cfg = config._parse_metadata(top_level_parser, 'multipkg', ['pkg_dirs'])
+    rc = [0]
     for dirname in cfg['pkg_dirs']:
         with manage.chdir(dirname):
             # Update sub-package setup.cfg with top-level version
@@ -25,5 +27,11 @@ def setup():
                     sub_parser.write(sub_cfg_file)
 
             cmd = [sys.executable, "setup.py"] + sys.argv[1:]
-            print "In directory {0}: Running '{1}'".format(dirname, ' '.join(cmd))
-            cmdline.run(cmd, capture_stdout=False)
+            print ("In directory {0}: Running '{1}'"
+                   .format(dirname, ' '.join(cmd)))
+            p = subprocess.Popen(cmd)
+            p.communicate()
+            if p.returncode != 0:
+                print "Command failed with exit code {0}".format(p.returncode)
+                rc[0] = p.returncode
+    sys.exit(rc[0])
