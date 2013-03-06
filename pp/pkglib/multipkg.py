@@ -2,6 +2,15 @@
 """
 A top level helper so setup.py commands can be run on a number of
 Python packages in a repository in the correct order.
+
+Any failure in a sub-command will cause the loop to stop, unless it was a
+test command in which case it will continue through all the packages.
+
+If you have interdependent packages you need to setup in an environment, a
+trick to sidestep the setup ordering problem is to run the following in order::
+
+    python setup.py develop --no-deps
+    python setup.py develop
 """
 import sys
 import subprocess
