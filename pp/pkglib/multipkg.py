@@ -32,6 +32,15 @@ def setup():
             p = subprocess.Popen(cmd)
             p.communicate()
             if p.returncode != 0:
+                # Here we exit straight away, unless this was a run as
+                # 'python setup.py test'. Reason for this is that we want to
+                # run all the packages' tests through and gather the results.
+                # For any other setup.py command, a failure here is likely
+                # some sort of build or config issue and it's best not to
+                # plow on.
                 print "Command failed with exit code {0}".format(p.returncode)
-                rc[0] = p.returncode
+                if 'test' in cmd:
+                    rc[0] = p.returncode
+                else:
+                    sys.exit(p.returncode)
     sys.exit(rc[0])
