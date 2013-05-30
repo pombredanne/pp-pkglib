@@ -51,8 +51,8 @@ def setup():
                 # some sort of build or config issue and it's best not to
                 # plow on.
                 print "Command failed with exit code {0}".format(p.returncode)
-                if 'test' in cmd and not '-x' in cmd  \
-                                 and not '--exitfirst' in cmd:
+                if 'test' in cmd and not '-x' in ' '.join(cmd)  \
+                                 and not '--exitfirst' in ' '.join(cmd):
                     rc[0] = p.returncode
                 else:
                     sys.exit(p.returncode)
