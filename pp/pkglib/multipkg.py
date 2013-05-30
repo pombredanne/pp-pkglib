@@ -4,7 +4,9 @@ A top level helper so setup.py commands can be run on a number of
 Python packages in a repository in the correct order.
 
 Any failure in a sub-command will cause the loop to stop, unless it was a
-test command in which case it will continue through all the packages.
+test command in which case it will continue through all the packages, unless
+the '-x' option was there in which case it will stop as normal.
+
 
 If you have interdependent packages you need to setup in an environment, a
 trick to sidestep the setup ordering problem is to run the following in order::
@@ -44,11 +46,13 @@ def setup():
                 # Here we exit straight away, unless this was a run as
                 # 'python setup.py test'. Reason for this is that we want to
                 # run all the packages' tests through and gather the results.
+                # Exception: using the -x/--exitfirst option.
                 # For any other setup.py command, a failure here is likely
                 # some sort of build or config issue and it's best not to
                 # plow on.
                 print "Command failed with exit code {0}".format(p.returncode)
-                if 'test' in cmd:
+                if 'test' in cmd and not '-x' in cmd  \
+                                 and not '--exitfirst' in cmd:
                     rc[0] = p.returncode
                 else:
                     sys.exit(p.returncode)
