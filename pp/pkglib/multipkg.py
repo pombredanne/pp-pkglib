@@ -22,13 +22,13 @@ from pkglib import config, manage
 def setup():
     """ Mirror pkglib's setup() method for each sub-package in this repository.
     """
-    top_level_parser = config.get_pkg_cfg_parser()
+    top_level_parser = config.parse.get_pkg_cfg_parser()
     cfg = config._parse_metadata(top_level_parser, 'multipkg', ['pkg_dirs'])
     rc = [0]
     for dirname in cfg['pkg_dirs']:
         with manage.chdir(dirname):
             # Update sub-package setup.cfg with top-level version
-            sub_parser = config.get_pkg_cfg_parser()
+            sub_parser = config.parse.get_pkg_cfg_parser()
             sub_cfg = config.parse_pkg_metadata(sub_parser)
             if sub_cfg['version'] != cfg['version']:
                 print ("Updating setup.cfg version for {0}: {1} -> {2}"
@@ -52,7 +52,7 @@ def setup():
                 # plow on.
                 print "Command failed with exit code {0}".format(p.returncode)
                 if 'test' in cmd and not '-x' in ' '.join(cmd)  \
-                                 and not '--exitfirst' in ' '.join(cmd):
+                                and not '--exitfirst' in ' '.join(cmd):
                     rc[0] = p.returncode
                 else:
                     sys.exit(p.returncode)
